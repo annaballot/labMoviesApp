@@ -7,6 +7,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
@@ -22,6 +23,9 @@ const styles = {
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
+  // avatar2: {
+  //   backgroundColor: "rgb(0, 0, 255)",
+  // },
 };
 
 interface MovieListProps {
@@ -35,14 +39,21 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({movie, action}) => {
-  const { favourites, addToFavourites } = useContext(MoviesContext);
+  const { favourites, addToFavourites, mustWatch } = useContext(MoviesContext);
 
   if (favourites.find((id) => id === movie.id)) 
     movie.favourite = true;
+
+  if (mustWatch.find((id) => id === movie.id)) 
+    movie.mustWatch = true;
  
+  console.log(mustWatch)
+
+
 
   return (
     <Card sx={styles.card}>
+      
       <CardHeader
         avatar={
           movie.favourite ? (
@@ -57,6 +68,13 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, action}) => {
           </Typography>
         }
       />
+            {
+          movie.mustWatch ? (
+          <Avatar sx={styles.avatar}>
+            <PlaylistAddCheckIcon />
+           </Avatar>
+        ) : null 
+      }
       <CardMedia
         sx={styles.media}
         image={
@@ -89,6 +107,7 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, action}) => {
           </Button>
         </Link>
       </CardActions>
+
     </Card>
   );
 }

@@ -5,17 +5,19 @@ import { MoviesContext } from "../../contexts/moviesContext";
 import {BaseMovieProps} from "../../types/interfaces";
 
 const AddToPlaylistIcon: React.FC<BaseMovieProps> = (movie) => {
-  // const context = useContext(MoviesContext);
+  const context = useContext(MoviesContext);
 
-  // const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   context.removeFromFavourites(movie);
-  // };
+  const onUserRequest = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    context.addToMustWatch(movie);
+    console.log("added movie to must watch list: " + movie)
+    // console.log(mustWatch)
+  };
 
 return (
   <IconButton
     aria-label="Add to Playlist"
-    // onClick={onUserRequest}
+    onClick={onUserRequest}
   >
     <PlaylistAddIcon color="primary" fontSize="large" />
   </IconButton>
